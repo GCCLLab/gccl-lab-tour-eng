@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GCCL — Interactive Lab Tour</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav__inner">
+    <div class="nav__branding">
+      <img src="logo.png" alt="GCCL" class="nav__logo-img">
+      <h1 class="nav__title">Interactive Lab Tour</h1>
+    </div>
+    <nav class="nav__links">
+      <button class="nav__link" data-goto="tour">Lab Tour</button>
+      <a class="nav__link nav__link--external" href="https://www.gccl.co.kr/board/board_online/board_form01.asp?scrID=0000000239&pageNum=7&subNum=1&ssubNum=1" target="_blank" rel="noopener">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ============ 1. LANDING ============ -->
+  <section id="view-landing" class="view view--landing is-active">
+    <div class="landing__bg" style="background-image:url('GCCL.jpg')"></div>
+    <div class="landing__scrim"></div>
+    <div class="landing__content">
+      <p class="eyebrow">EXPLORE GCCL</p>
+      <h1>Interactive Lab Tour</h1>
+      <p class="landing__sub">Explore our end-to-end clinical laboratory services.</p>
+      <button class="btn btn--primary" id="btn-start-tour">Start Tour</button>
+    </div>
+  </section>
+
+  <!-- ============ 2. LAB TOUR (Company Overview + Map + Contact) ============ -->
+  <section id="view-tour" class="view view--tour">
+
+    <!-- Company Overview Intro -->
+    <div class="tour-intro">
+      <div class="section-inner section-inner--tour">
+        <h2 id="overview-title">Company Overview</h2>
+
+        <div class="overview__grid">
+          <div class="overview__video">
+            <div class="video-frame">
+              <video
+                id="overview-video"
+                controls
+                playsinline
+                preload="metadata">
+              </video>
+            </div>
+          </div>
+          <div class="overview__text">
+            <p id="overview-description" class="body-text"></p>
+            <ul id="overview-materials" class="materials-list"></ul>
+            <a class="btn btn--ghost" href="https://eng.gccl.co.kr/" target="_blank" rel="noopener">Homepage</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Interactive Map Section -->
+    <div class="tour-map-section">
+      <div class="map-header">
+        <div>
+          <h2>Explore Our Facilities</h2>
+          <p class="map__hint">Hover a laboratory to preview it. Click to explore.</p>
+        </div>
+      </div>
+
+      <div class="map-viewport" id="map-viewport">
+        <div class="map-frame" id="map-frame">
+          <img src="GCCL.jpg" alt="GCCL laboratory facility map" class="map-image" id="map-image">
+          <svg class="map-overlay" id="map-overlay" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+          <div class="map-tooltip" id="map-tooltip">
+            <div class="map-tooltip__title" id="tooltip-title"></div>
+            <div class="map-tooltip__services" id="tooltip-services"></div>
+            <div class="map-tooltip__cta">Click to Explore</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="tour-contact-section">
+      <div class="section-inner section-inner--contact">
+        <h2 id="contact-heading">Ready to discuss your next project?</h2>
+        <p class="body-text" id="contact-description"></p>
+        <a class="btn btn--primary" id="contact-cta" href="#" target="_blank" rel="noopener">Contact GCCL</a>
+        <div class="footer-links" id="footer-links"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ UNIFIED LAB INFO MODAL ============ -->
+<div class="modal-scrim" id="modal-scrim"></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="modal__close" id="modal-close" aria-label="Close">&times;</button>
+  <div class="modal__content">
+    <div class="modal__header">
+      <p class="eyebrow" id="modal-eyebrow">LABORATORY</p>
+      <h3 id="modal-title"></h3>
+    </div>
+
+    <div class="modal__video-wrapper">
+      <div class="video-frame video-frame--modal">
+        <video
+          id="modal-video"
+          controls
+          playsinline
+          preload="metadata">
+        </video>
+      </div>
+    </div>
+
+    <div class="modal__body">
+      <h4 class="modal__subhead">Overview</h4>
+      <p class="body-text" id="modal-description"></p>
+
+      <h4 class="modal__subhead">Related Materials</h4>
+      <ul class="materials-list" id="modal-materials"></ul>
+
+      <div class="modal__footer">
+        <a class="btn btn--primary" id="modal-contact" href="https://www.gccl.co.kr/board/board_online/board_form01.asp?scrID=0000000239&pageNum=7&subNum=1&ssubNum=1" target="_blank" rel="noopener">Contact GCCL</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

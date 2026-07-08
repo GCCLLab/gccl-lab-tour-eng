@@ -1,0 +1,540 @@
+/* ===========================================================
+   GCCL Interactive Lab Tour — V3.3 Premium Edition
+   Enhanced design with integrated Contact section.
+   =========================================================== */
+
+:root {
+  /* Brand palette */
+  --deep-blue:   #002B49;
+  --light-blue:  #00A9E0;
+  --bg:          #F5F7FB;
+  --accent:      #97D700;
+  --white:       #FFFFFF;
+
+  /* Derived */
+  --ink:         var(--deep-blue);
+  --ink-soft:    #4A6072;
+  --line:        #E1E8ED;
+  --modal-bg:    #FFFFFF;
+  --scrim:       rgba(0, 43, 73, 0.55);
+
+  /* Type */
+  --font-display: -apple-system, "SF Pro Display", "Inter", "Segoe UI", sans-serif;
+  --font-body:    -apple-system, "SF Pro Text", "Inter", "Segoe UI", sans-serif;
+  --font-mono:    "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  /* Motion */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 200ms;
+  --dur: 300ms;
+  --dur-slow: 400ms;
+
+  /* Layout */
+  --nav-h: 70px;
+  --radius: 12px;
+  --radius-sm: 8px;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; margin: 0 0 12px; letter-spacing: -0.01em; }
+p { margin: 0 0 16px; }
+a { color: var(--light-blue); }
+button { font-family: inherit; cursor: pointer; }
+video { display: block; width: 100%; height: auto; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--light-blue);
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+.body-text { color: var(--ink-soft); line-height: 1.7; font-size: 15px; }
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  transition: all var(--dur-fast) var(--ease);
+  box-shadow: 0 2px 8px rgba(0, 43, 73, 0.1);
+}
+.btn--primary {
+  background: var(--deep-blue);
+  color: var(--white);
+}
+.btn--primary:hover {
+  background: var(--light-blue);
+  box-shadow: 0 8px 24px rgba(0, 169, 224, 0.3);
+  transform: translateY(-2px);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--deep-blue);
+  border: 1px solid var(--line);
+  box-shadow: none;
+  margin-top: 16px;
+}
+.btn--ghost:hover {
+  border-color: var(--light-blue);
+  color: var(--light-blue);
+  background: rgba(0, 169, 224, 0.05);
+}
+
+/* ---------- Premium Navigation ---------- */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  z-index: 50;
+  box-shadow: 0 2px 12px rgba(0, 43, 73, 0.06);
+}
+.nav__inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav__branding {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav__logo-img {
+  height: 40px;
+  width: auto;
+}
+.nav__title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--deep-blue);
+  letter-spacing: -0.01em;
+}
+.nav__links { display: flex; gap: 32px; align-items: center; }
+.nav__link {
+  background: none; border: none; color: var(--ink-soft);
+  font-size: 14px; font-weight: 500; padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  transition: all var(--dur-fast) var(--ease);
+  cursor: pointer;
+}
+.nav__link:hover { color: var(--deep-blue); border-color: var(--light-blue); }
+.nav__link--external {
+  text-decoration: none;
+}
+
+/* ---------- View switching ---------- */
+main#app { position: relative; }
+.view { display: none; }
+.view.is-active { display: block; animation: fadeIn var(--dur-slow) var(--ease); }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.section-inner { max-width: 960px; margin: 0 auto; padding: calc(var(--nav-h) + 40px) 40px 32px; }
+.section-inner--tour { padding: calc(var(--nav-h) + 32px) 40px 24px; max-width: 960px; }
+.section-inner--contact {
+  text-align: center;
+  max-width: 860px;
+  padding: 64px 40px;
+}
+
+/* ---------- 1. Landing ---------- */
+.view--landing {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+.view--landing.is-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.landing__bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(4px) brightness(0.92);
+  transform: scale(1.04);
+}
+.landing__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,43,73,0.4) 0%, rgba(0,43,73,0.65) 100%);
+}
+.landing__content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: var(--white);
+  padding: 0 24px;
+  max-width: 640px;
+}
+.landing__content .eyebrow { color: var(--accent); }
+.landing__content h1 { font-size: clamp(36px, 6vw, 56px); color: var(--white); margin-bottom: 20px; }
+.landing__sub { color: rgba(255,255,255,0.9); font-size: 18px; margin-bottom: 36px; font-weight: 500; }
+
+/* ---------- 2. Lab Tour (Company Overview + Map + Contact) ---------- */
+.view--tour {
+  display: block;
+}
+
+.tour-intro {
+  background: var(--white);
+  border-bottom: 1px solid var(--line);
+}
+
+.overview__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 48px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.video-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--deep-blue);
+  box-shadow: 0 12px 32px rgba(0, 43, 73, 0.12);
+}
+.video-frame video { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.materials-list { list-style: none; padding: 0; margin: 0 0 20px; }
+.materials-list li { margin-bottom: 10px; }
+.materials-list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--deep-blue);
+  border-bottom: 2px solid var(--line);
+  padding-bottom: 2px;
+  transition: all var(--dur-fast) var(--ease);
+}
+.materials-list a:hover { color: var(--light-blue); border-color: var(--light-blue); }
+.materials-list a::after { content: "↗"; font-size: 11px; margin-left: 4px; }
+
+/* Lab Map Section — Hero Element */
+.tour-map-section {
+  padding: 48px 24px;
+  background: linear-gradient(135deg, rgba(248,250,252,0.5) 0%, rgba(255,255,255,1) 100%);
+}
+
+.map-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 32px;
+  max-width: 1700px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+.map-header h2 {
+  font-size: 28px;
+  margin: 0;
+  color: var(--deep-blue);
+  font-weight: 700;
+}
+.map-header > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+.map__hint {
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.map-viewport {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 500px;
+  max-width: 1700px;
+  margin: 0 auto;
+}
+
+.map-frame {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: 0 20px 60px rgba(0, 43, 73, 0.15);
+  width: 95vw;
+  max-width: 1700px;
+}
+.map-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.map-overlay { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.hotspot {
+  fill: rgba(0, 169, 224, 0.0);
+  stroke: transparent;
+  stroke-width: 0.3;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease);
+}
+.map-frame.has-hover .hotspot { opacity: 0.3; }
+.hotspot:hover,
+.hotspot.is-hovered {
+  opacity: 1 !important;
+  fill: rgba(0, 169, 224, 0.18);
+  stroke: var(--light-blue);
+  stroke-width: 0.6;
+  filter: drop-shadow(0 2px 8px rgba(0, 169, 224, 0.2));
+}
+
+.map-tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 5;
+  background: var(--white);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 8px 24px rgba(0, 43, 73, 0.2);
+  padding: 14px 18px;
+
+  width: 320px;
+  max-width: calc(100vw - 48px);
+
+  opacity: 0;
+  transform: translate(-50%, -12px);
+  transition: all var(--dur) var(--ease);
+}
+.map-tooltip.is-visible { opacity: 1; transform: translate(-50%, -18px); }
+.map-tooltip__title {
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 4px;
+  color: var(--deep-blue);
+}
+.map-tooltip__services {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+.map-tooltip__cta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--light-blue);
+  font-weight: 600;
+}
+
+/* ---------- Contact Section ---------- */
+.tour-contact-section {
+  background: var(--white);
+  border-top: 1px solid var(--line);
+}
+
+#contact-heading {
+  font-size: 26px;
+  margin-bottom: 16px;
+}
+
+#contact-cta {
+  margin: 24px 0 32px 0;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+.footer-links a {
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all var(--dur-fast) var(--ease);
+}
+.footer-links a:hover {
+  color: var(--light-blue);
+}
+
+/* ---------- Modal (Scrim + Dialog) ---------- */
+.modal-scrim {
+  position: fixed; inset: 0;
+  background: rgba(0, 12, 22, 0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur) var(--ease);
+  z-index: 155;
+}
+.modal-scrim.is-visible { opacity: 1; pointer-events: auto; }
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.96);
+  width: min(1200px, 90vw);
+  max-height: 90vh;
+  background: var(--modal-bg);
+  border-radius: var(--radius);
+  overflow-y: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: all var(--dur-slow) var(--ease);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.35);
+  z-index: 160;
+}
+.modal.is-open {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal__close {
+  position: absolute;
+  top: 20px; right: 20px;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink-soft);
+  font-size: 22px;
+  line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--dur-fast) var(--ease);
+  z-index: 10;
+  cursor: pointer;
+}
+.modal__close:hover {
+  color: var(--deep-blue);
+  border-color: var(--light-blue);
+  background: var(--bg);
+}
+
+.modal__content {
+  padding: 40px;
+}
+
+.modal__header {
+  margin-bottom: 24px;
+}
+.modal__header .eyebrow { margin-bottom: 8px; }
+.modal__header h3 { margin-bottom: 0; font-size: 26px; font-weight: 700; }
+
+.modal__video-wrapper {
+  margin-bottom: 32px;
+}
+
+.video-frame--modal {
+  box-shadow: 0 20px 60px rgba(0, 43, 73, 0.15);
+}
+
+.modal__body {
+  padding-top: 20px;
+}
+
+.modal__subhead {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--deep-blue);
+  margin: 24px 0 14px;
+  font-weight: 700;
+}
+.modal__subhead:first-child { margin-top: 0; }
+
+.modal__footer {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .overview__grid { grid-template-columns: 1fr; gap: 32px; }
+  .section-inner--tour { padding: calc(var(--nav-h) + 28px) 28px 20px; }
+  .section-inner--contact { padding: 48px 28px; }
+  .tour-map-section { padding: 36px 20px; }
+  .nav__inner { padding: 0 28px; }
+  .map-viewport { min-height: 400px; }
+  .map-header { gap: 10px; }
+}
+
+@media (max-width: 768px) {
+  :root { --nav-h: 65px; }
+  .nav__inner { padding: 0 20px; }
+  .nav__title { font-size: 14px; }
+  .nav__logo-img { height: 32px; }
+  .nav__links { gap: 20px; }
+  .section-inner { padding: calc(var(--nav-h) + 24px) 20px 28px; }
+  .section-inner--contact { padding: 40px 20px; }
+  .tour-map-section { padding: 28px 16px; }
+  .tour-intro { border-bottom: none; }
+  .overview__grid { gap: 20px; }
+  .overview__text { margin-top: 16px; }
+  .map-header h2 { font-size: 22px; }
+  .map__hint { font-size: 13px; }
+  .map-viewport { min-height: 300px; }
+  .modal { width: 95vw; }
+  .modal__content { padding: 32px 24px; }
+  .footer-links { gap: 16px; }
+  #contact-heading { font-size: 22px; }
+}
+
+@media (max-width: 560px) {
+  :root { --nav-h: 60px; }
+  .landing__content h1 { font-size: 28px; }
+  .landing__sub { font-size: 15px; }
+  .map-tooltip { min-width: 140px; padding: 10px 12px; font-size: 12px; }
+  .modal { width: 98vw; }
+  .modal__content { padding: 24px 16px; }
+  .modal__close { top: 12px; right: 12px; width: 36px; height: 36px; }
+  .tour-map-section { padding: 20px 12px; }
+  .map-header h2 { font-size: 20px; }
+  .section-inner--tour { padding: calc(var(--nav-h) + 20px) 16px 16px; }
+  .section-inner--contact { padding: 32px 16px; }
+  .footer-links { gap: 12px; font-size: 13px; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
